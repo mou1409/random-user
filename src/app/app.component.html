@@ -1,0 +1,47 @@
+<div class="form-container">
+  <form [formGroup]="profileForm" (ngSubmit)="getProfiles(profileForm.value)">
+    <div class="size">
+      <label for="size">
+        Size
+      </label>
+      <input id="size" type="text" formControlName="size">
+    </div>
+    <button class="button" type="submit">Get Profiles</button>
+  </form>
+  <div *ngIf="profiles.length>0">
+    <h1 class="center"> Profiles </h1>
+    <ul>
+      <li (click)="toggleModal(profile)" *ngFor="let profile of profiles">
+        <img src="{{profile.picture.thumbnail}}" />
+        <span style="width:50%;">{{profile.name.first}}</span>
+      </li>
+    </ul>
+  </div>
+
+  <div id="id01" class="w3-modal" *ngIf="currentUser.name" [style.display]="openModal ? 'block': 'none'">
+    <div class="w3-modal-content w3-animate-top w3-card-4">
+      <header class="w3-container w3-teal"> 
+        <span (click)="openModal=false;" 
+        class="w3-button w3-display-topright">&times;</span>
+        <h2>{{currentUser.name.title}}. {{currentUser.name.first}} {{currentUser.name.first}}</h2>
+      </header>
+      <div class="w3-container modal-body">
+        <div>
+          <p>Phone : {{currentUser.phone}}</p>
+          <p>Email : {{ currentUser.email }} </p>
+          <p>DOB : {{ currentUser.dob.date  | date:'medium' }} </p>
+          <p>Address : {{ currentUser.location.street.name }}, 
+            {{ currentUser.location.street.number }},
+            {{ currentUser.location.city }},
+            {{ currentUser.location.state }},
+            {{ currentUser.location.country}}
+          </p>          
+        </div>
+        <div>
+          <img src="{{currentUser.picture.large}}">
+        </div>
+      </div>      
+    </div>
+  </div>
+
+</div>
